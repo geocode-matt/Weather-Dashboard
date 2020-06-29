@@ -10,11 +10,11 @@ var dailyWindSpeed;
 var dailyUvIndex;
 var searchesContainerEl = document.querySelector("#search-list");
 var searchedItemsClick = document.querySelector("#search-list")
+var fiveDayCard = document.querySelector(".five-day-card")
 
 ////
 // FUNCTIONS
 ////
-
 
 // Function to fetch the daily weather API
 function getDailyWeather(city) {
@@ -72,7 +72,7 @@ function getFiveDayWeather(city) {
       console.log(dayOneTemp);
       console.log(dayOneHum);
 
-      var icon = document.createElement("img");
+
 
 
       // dailyCity = data.name;
@@ -113,20 +113,15 @@ function getFiveDayWeather(city) {
 ////
 var formSubmitHandler = function(event) {
 event.preventDefault();
-// cardDivEl.innerHTML = "";
 // get value from input element
 var city = cityInputEl.value.trim();
 
 if (city) {
   getDailyWeather(city);
   getFiveDayWeather(city);
-//   cityInputEl.value = "";
-  // displayDaily();
 } else {
   alert("Please enter a valid city name!");
 }
-    // console.log(event);
-    // console.log(city);
 };
 
 var clearDiv = function() {
@@ -139,28 +134,10 @@ var clearDiv = function() {
 
 // function to display searched items on left-hand side list
 var displaySearches = function() {
-// create a container for each repo
-// create a link for each repo
 var listItemEl = document.createElement("button");
 listItemEl.classList = "list-group-item list-group-item-action";
-// listItemEl.setAttribute("style", "type: button; width: 100%;")
-// listEl.setAttribute("style", "display: flex; padding: 0 0 0 0;")
 listItemEl.textContent = city.value;
 searchesContainerEl.appendChild(listItemEl);
-
-// searchItemEl.setAttribute("href", "./single-repo.html?repo=" + repoName);
-// create a span element to hold repository name
-
-// var titleEl = document.createElement("span");
-// titleEl.textContent = city.value;
-
-
-
-
-// append to container
-// searchItemEl.appendChild(titleEl);
-// append container to the dom
-// searchesContainerEl.appendChild(searchItemEl);
 }
 
 
