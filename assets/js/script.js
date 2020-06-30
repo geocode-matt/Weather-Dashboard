@@ -1,3 +1,7 @@
+////
+// Variables
+////
+
 var cityFormEl = document.querySelector("#user-form-btn");
 var cityInputEl = document.querySelector("#city");
 var dailyList = document.querySelector(".dynamicList");
@@ -10,12 +14,12 @@ var dailyWindSpeed;
 var dailyUvIndex;
 var searchesContainerEl = document.querySelector("#search-list");
 var searchedItemsClick = document.querySelector("#search-list")
-var fiveDayCard = document.querySelector(".day-one-card")
+var fiveDayCard = document.querySelector("#five-day-card")
+
 
 ////
 // FUNCTIONS
 ////
-
 // Function to fetch the daily weather API
 function getDailyWeather(city) {
     var apiDaily = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=fb1408fe157a1fe32343a24d25e5ebaf";
@@ -60,7 +64,6 @@ function getDailyWeatherSearched(city) {
   // make a request to the url
   fetch(apiDaily).then(function(response) {
     response.json().then(function(data) {
-      console.log(data);
       dailyCity = data.name;
       dailyHumidity = Math.floor(data.main.humidity);
       dailyTemp = Math.floor(data.main.temp);
@@ -75,7 +78,7 @@ function getDailyWeatherSearched(city) {
 
     var cityTemp = document.createElement("li");
     cityTemp.textContent = "Temperature:" + " " + dailyTemp + '­­°';
-    cityTemp.setAttribute("style", "list-style: none;");
+    cityTemp.setAttribute("style", "list-style: none; line-height: 2.5rem;");
     dailyList.appendChild(cityTemp);
 
     var cityHum = document.createElement("li");
@@ -99,8 +102,9 @@ function getFiveDayWeather(city) {
     response.json().then(function(data) {
       // console.log(data);
       dataArr = data.list;
+      console.log(data);
       var dataArrSliced = dataArr.slice(0, 5);
-      console.log(dataArrSliced);
+      $(fiveDayCard).empty()
 
       var dayOneDate = moment(now, "M/DD/YYYY").add(1, 'd').format("M/DD/YYYY");
       var dayOneIcon = dataArrSliced[0].weather[0].icon
@@ -313,15 +317,11 @@ function getFiveDayWeather(city) {
   });
 };
   
-
-////
 // Function to grab input city and run the getWeather function
-////
 var formSubmitHandler = function(event) {
   event.preventDefault();
 // get value from input element
 var city = cityInputEl.value.trim();
-
 if (city) {
   getDailyWeather(city);
   getFiveDayWeather(city);
@@ -330,22 +330,14 @@ if (city) {
 }
 };
 
-// var clearDiv = function() {
-//   if (cardDivEl.textContent = "") {
-//     return
-//   } else {
-//     $(dailyList).empty()
-//   }
-// }
-
-// function to display searched items on left-hand side list
+// function to display searched items on left-hand side list and capitalize first letter
 var displaySearches = function() {
     var listItemEl = document.createElement("button");
     listItemEl.classList = "list-group-item list-group-item-action";
-    listItemEl.textContent = city.value;
+    var string = city.value;
+    listItemEl.innerHTML = string.charAt(0).toUpperCase() + string.slice(1);
     searchesContainerEl.appendChild(listItemEl);
 }
-
 
 
 
@@ -357,5 +349,5 @@ searchedItemsClick.addEventListener("click", function(event) {
   event.preventDefault();
   var city = event.target.textContent;
   getDailyWeatherSearched(city);
-  // getFiveDayWeather(city);
+  getFiveDayWeather(city);
 });
