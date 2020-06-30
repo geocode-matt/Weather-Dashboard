@@ -26,7 +26,6 @@ function getDailyWeather(city) {
     // make a request to the url
     fetch(apiDaily).then(function(response) {
       response.json().then(function(data) {
-        console.log(data);
         dailyCity = data.name;
         dailyHumidity = Math.floor(data.main.humidity);
         dailyTemp = Math.floor(data.main.temp);
@@ -102,7 +101,6 @@ function getFiveDayWeather(city) {
     response.json().then(function(data) {
       // console.log(data);
       dataArr = data.list;
-      console.log(data);
       var dataArrSliced = dataArr.slice(0, 5);
       $(fiveDayCard).empty()
 
